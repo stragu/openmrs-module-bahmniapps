@@ -17,7 +17,7 @@ angular.module('opd.documentupload')
 
             var createVisit = function (visit) {
                 var newVisit = angular.extend(new Bahmni.Opd.DocumentUpload.Visit(), visit);
-                newVisit.initSavedImages();
+                newVisit.initSavedImages(encounterTypeUuid);
                 return newVisit;
             };
 

@@ -10,13 +10,14 @@ Bahmni.Opd.DocumentUpload.Visit = function () {
     this.encounters = [];
     var androidDateFormat = "yyyy-mm-dd";
 
-    this.initSavedImages = function () {
+    this.initSavedImages = function (encounterTypeUuid) {
         this.savedImages = [];
         this.images = [];
 
         var savedImages = this.savedImages;
+
         this.encounters.forEach(function (encounter) {
-            encounter.obs && encounter.obs.forEach(function (observation) {
+            encounter.encounterType.uuid == encounterTypeUuid && encounter.obs && encounter.obs.forEach(function (observation) {
                 observation.groupMembers && observation.groupMembers.forEach(function (member) {
                     if (member.concept.name.name == 'Document') {
                         var conceptName = observation.concept.name.name;
