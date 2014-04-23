@@ -4,6 +4,7 @@ angular.module('opd.documentupload')
     .controller('DocumentController', ['$scope', '$route', 'visitService', 'patientService', 'patientMapper', 'spinner', 'visitDocumentService', '$rootScope', '$http', '$q', '$timeout',
         function ($scope, $route, visitService, patientService, patientMapper, spinner, visitDocumentService, $rootScope, $http, $q, $timeout) {
 
+            var encounterTypeUuid;
             var topLevelConceptUuid;
             var customVisitParams = 'custom:(uuid,startDatetime,stopDatetime,visitType,patient,encounters:(uuid,encounterType,orders:(uuid,orderType,voided,concept:(uuid,set,name),),obs:(uuid,value,concept,obsDatetime,groupMembers:(uuid,concept:(uuid,name),obsDatetime,value:(uuid,name),groupMembers:(uuid,concept:(uuid,name),value:(uuid,name),groupMembers:(uuid,concept:(uuid,name),value:(uuid,name)))))))';
 
@@ -40,12 +41,33 @@ angular.module('opd.documentupload')
                 });
             };
 
-            var getTopLevelConceptUuid = function () { 
-                return $http.get(Bahmni.Common.Constants.conceptUrl, { params: {name: "Radiology"}
-                    }).then(function (response) {
-                        var topLevelConcept = response.data.results[0];
-                        topLevelConceptUuid = topLevelConcept ? topLevelConcept.uuid : null;
-                    });
+            var setDefaultConcept = function(topLevelConcept) {
+                if (topLevelConcept && topLevelConcept.setMembers.length == 1) {
+                    var concept = topLevelConcept.setMembers[0];
+                    $scope.defaultConcept = {'concept':{uuid:concept.uuid, name:concept.name.name, editableName:concept.name.name}, 'value':concept.name.name};
+                }else if($rootScope.appConfig.defaultOption){
+                    var concept = topLevelConcept.setMembers.filter(function(member){
+                        return member.name.name == $rootScope.appConfig.defaultOption;
+                    })[0];
+                    $scope.defaultConcept = {'concept':{uuid:concept.uuid, name:concept.name.name, editableName:concept.name.name}, 'value':concept.name.name};
+                }
+            };
+
+            var getTopLevelConceptUuid = function () {
+                if($rootScope.appConfig.topLevelConcept == null ) {
+                    topLevelConceptUuid = null;
+                    return $q.when({});
+                }
+                return $http.get(Bahmni.Common.Constants.conceptUrl, {
+                    params:{
+                        name:$rootScope.appConfig.topLevelConcept,
+                        v:"custom:(uuid,setMembers:(uuid,name:(name)))"
+                    }
+                }).then(function (response) {
+                    var topLevelConcept = response.data.results[0];
+                    topLevelConceptUuid = topLevelConcept ? topLevelConcept.uuid : null;
+                    setDefaultConcept(topLevelConcept);
+                });
             };
 
             var sortVisits = function() {
@@ -57,6 +79,7 @@ angular.module('opd.documentupload')
             }
 
             var init = function () {
+                encounterTypeUuid = $scope.encounterConfig.getEncounterTypeUuid($rootScope.appConfig.encounterType);
                 initNewVisit();
                 var deferrables = $q.defer();
                 var promises = [];
@@ -84,10 +107,16 @@ angular.module('opd.documentupload')
                 });
             };
 
+            $scope.setConceptOnImage = function (image, selectedItem) {
+                if (selectedItem) {
+                    image.concept = Object.create(selectedItem.concept);
+                    image.changed = true;
+                }
+            };
+
             $scope.onConceptSelected = function(image){
                 return function(selectedItem){
-                    image.concept = selectedItem.concept;
-                    image.changed = true;
+                    $scope.setConceptOnImage(image, selectedItem);
                 }
             };
 
@@ -105,7 +134,7 @@ angular.module('opd.documentupload')
                 visitDocument.visitTypeUuid = visit.visitType.uuid;
                 visitDocument.visitStartDate = visit.startDate();
                 visitDocument.visitEndDate = visit.endDate();
-                visitDocument.encounterTypeUuid = $scope.encounterConfig.getRadiologyEncounterTypeUuid();
+                visitDocument.encounterTypeUuid = encounterTypeUuid;
                 visitDocument.encounterDateTime = visitDocument.visitStartDate;
                 visitDocument.providerUuid = $rootScope.currentProvider.uuid;
                 visitDocument.visitUuid = visit.uuid;

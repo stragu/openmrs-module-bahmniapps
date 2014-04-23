@@ -46,7 +46,7 @@
                         </span>
                     </div>
                     <div class="upload-inline-buttons">
-                        <input id="file-browse" type="file" name="image" accept="image/*" capture="camera" file-upload visit="newVisit">
+                        <input id="file-browse" type="file" name="image" accept="image/*" capture="camera" file-upload visit="newVisit" on-select="setConceptOnImage" default-concept="defaultConcept">
                         <label for="file-browse" class="btn btn-primary" ng-click="resetCurrentVisit(newVisit)"><i class="icon-camera icon-white"></i>SCAN</label>
                         <button type="submit" ng-disabled="newVisit.images.length == 0" class="btn btn-primary">
                             <i class="icon-save icon-white"></i>SAVE
@@ -72,7 +72,7 @@
                                 <li>
                                     <div class="file-actions">
                                         <div class="upload-inline-buttons">
-                                            <input id="file-browse-{{visit.uuid}}" type="file" name="image" accept="image/*" capture="camera" file-upload visit="visit">
+                                            <input id="file-browse-{{visit.uuid}}" type="file" name="image" accept="image/*" capture="camera" file-upload visit="visit" on-select="setConceptOnImage" default-concept="defaultConcept">
                                         </div>
                                         <label for="file-browse-{{visit.uuid}}" class="btn btn-primary">
                                             <i class="icon-camera icon-white"></i>SCAN

@@ -20,6 +20,9 @@ var EncounterConfig = (function () {
         },
         getRadiologyEncounterTypeUuid:function () {
             return this.encounterTypes["RADIOLOGY"];
+        },
+        getEncounterTypeUuid:function(encounterTypeName) {
+            return this.encounterTypes[encounterTypeName]
         }
     };
     return EncounterConfig;
