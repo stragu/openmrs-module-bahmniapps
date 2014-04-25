@@ -33,6 +33,7 @@ Bahmni.Opd.DocumentUpload.Visit = function () {
     };
 
     this.startDate = function () {
+        if(!this.isNew()) return moment(this.startDatetime).toDate();
         return this.parseDate(this.startDatetime);
     };
     
