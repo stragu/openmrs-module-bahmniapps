@@ -6,7 +6,7 @@ angular.module('opd.documentupload')
 
             var encounterTypeUuid;
             var topLevelConceptUuid;
-            var customVisitParams = 'custom:(uuid,startDatetime,stopDatetime,visitType,patient,encounters:(uuid,encounterType,orders:(uuid,orderType,voided,concept:(uuid,set,name),),obs:(uuid,value,concept,obsDatetime,groupMembers:(uuid,concept:(uuid,name),obsDatetime,value:(uuid,name),groupMembers:(uuid,concept:(uuid,name),value:(uuid,name),groupMembers:(uuid,concept:(uuid,name),value:(uuid,name)))))))';
+            var customVisitParams = 'custom:(uuid,startDatetime,stopDatetime,visitType,patient,encounters:(uuid,encounterType,orders:(uuid,orderType,voided,concept:(uuid,set,name),),obs:(id,uuid,value,concept,obsDatetime,groupMembers:(uuid,concept:(uuid,name),obsDatetime,value:(uuid,name),groupMembers:(uuid,concept:(uuid,name),value:(uuid,name),groupMembers:(uuid,concept:(uuid,name),value:(uuid,name)))))))';
 
             $scope.visits = [];
 
@@ -148,7 +148,7 @@ angular.module('opd.documentupload')
 
                 visit.images.forEach(function (image) {
                     visitDocument.documents.push({testUuid: image.concept.uuid, image: image.encodedValue.replace(/data:image\/.*;base64/, ""),
-                        format: image.encodedValue.split(";base64")[0].split("data:image/")[1]})
+                        obsDateTime: new Date(), format: image.encodedValue.split(";base64")[0].split("data:image/")[1]})
                 });
                 return visitDocument;
             };

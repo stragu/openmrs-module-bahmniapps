@@ -10,6 +10,13 @@ Bahmni.Opd.DocumentUpload.Visit = function () {
     this.encounters = [];
     var androidDateFormat = "yyyy-mm-dd";
 
+    this._sortSavedImages = function(savedImages) {
+        savedImages.sort(function(image1, image2){
+            return image1.id - image2.id
+        });
+        return savedImages;
+    };
+
     this.initSavedImages = function (encounterTypeUuid) {
         this.savedImages = [];
         this.images = [];
@@ -21,11 +28,13 @@ Bahmni.Opd.DocumentUpload.Visit = function () {
                 observation.groupMembers && observation.groupMembers.forEach(function (member) {
                     if (member.concept.name.name == 'Document') {
                         var conceptName = observation.concept.name.name;
-                        savedImages.push(new DocumentImage({"encodedValue": member.value, "obsUuid": observation.uuid, concept: {uuid: observation.concept.uuid, editableName: conceptName, name: conceptName}}));
+                        savedImages.push(new DocumentImage({"id": observation.id, "encodedValue": member.value, "obsUuid": observation.uuid, concept: {uuid: observation.concept.uuid, editableName: conceptName, name: conceptName}}));
                     }
                 });
             });
         });
+
+        this.savedImages = this._sortSavedImages(savedImages);
     };
 
     this.isNew = function () {
