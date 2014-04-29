@@ -5,7 +5,7 @@ files = [
   JASMINE_ADAPTER,
     '../app/components/angular/angular.js',
     '../app/components/angular-mocks/angular-mocks.js',
-    '../app/components/ngInfiniteScroll/ng-infinite-scroll.js',
+    '../app/components/ngInfiniteScroll/build/ng-infinite-scroll.js',
     '../app/components/d3/d3.min.js',
     '../app/components/nvd3/nv.d3.min.js',
     '../app/components/angularjs-nvd3-directives/dist/*.js',
