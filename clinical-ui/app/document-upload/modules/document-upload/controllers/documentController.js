@@ -169,6 +169,7 @@ angular.module('opd.documentupload')
                 $scope.resetCurrentVisit(existingVisit);
 
                 var visitDocument = createVisitDocument(existingVisit);
+                visitDocument.documents.reverse();
                 spinner.forPromise(function () {
                     return visitDocumentService.save(visitDocument).success(function (response) {
                         visitService.getVisit(response.visitUuid, customVisitParams).success(function (savedVisit) {

@@ -38,13 +38,7 @@
                             <input type="date" ng-model="newVisit.stopDatetime" class="field-value">
                         </div>
                     </div>
-                    <div>
-                        <span class="clear" ng-repeat="image in newVisit.images">
-                            <img ng-src="{{image.encodedValue}}" width="100">
-                            <input class="concept-name" ng-model="image.concept.editableName" my-autocomplete source="getConcepts" response-map="getDataResults" on-select="onConceptSelected(image)" required placeholder="Enter the test name" title="Select the test from autocomplete" pattern="{{escapeRegExp(image.concept.name)}}" blur-on-select="true"/>
-                            <button type="button" ng-click="newVisit.removeNewAddedImage(image)"><i class="icon-trash"></i></button>
-                        </span>
-                    </div>
+
                     <div class="upload-inline-buttons">
                         <input id="file-browse" type="file" name="image" accept="image/*" capture="camera" file-upload visit="newVisit" on-select="setConceptOnImage" default-concept="defaultConcept">
                         <label for="file-browse" class="btn btn-primary" ng-click="resetCurrentVisit(newVisit)"><i class="icon-camera icon-white"></i>SCAN</label>
@@ -52,6 +46,15 @@
                             <i class="icon-save icon-white"></i>SAVE
                         </button>
                     </div>
+
+                    <div>
+                        <span class="clear" ng-repeat="image in newVisit.images">
+                            <img ng-src="{{image.encodedValue}}" width="100">
+                            <input class="concept-name" ng-model="image.concept.editableName" my-autocomplete source="getConcepts" response-map="getDataResults" on-select="onConceptSelected(image)" required placeholder="Enter the test name" title="Select the test from autocomplete" pattern="{{escapeRegExp(image.concept.name)}}" blur-on-select="true"/>
+                            <button type="button" ng-click="newVisit.removeNewAddedImage(image)"><i class="icon-trash"></i></button>
+                        </span>
+                    </div>
+
                 </form>
             </div>
         </li>

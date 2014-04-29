@@ -12,7 +12,7 @@ Bahmni.Opd.DocumentUpload.Visit = function () {
 
     this._sortSavedImages = function(savedImages) {
         savedImages.sort(function(image1, image2){
-            return image1.id - image2.id
+            return image2.id - image1.id;
         });
         return savedImages;
     };
@@ -65,7 +65,7 @@ Bahmni.Opd.DocumentUpload.Visit = function () {
         });
         if (alreadyPresent.length == 0) {
             savedImage = new DocumentImage({"encodedValue": image, "new": true});
-            this.images.push(savedImage);
+            this.images.unshift(savedImage);
         }
         this.markAsUpdated();
         return savedImage;
