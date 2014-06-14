@@ -40,6 +40,8 @@ angular.module('bahmni.registration')
 
 
             $scope.hideFields = appService.getAppDescriptor().getConfigValue("hideFields");
+            $scope.minRegistrationFee = appService.getAppDescriptor().getConfigValue("minRegistrationFee") || 0;
+            var formSubmitOnEnter = appService.getAppDescriptor().getConfigValue("visitFormSubmitOnEnter") || false;
             $scope.allowPrintingSupplementalPaper = appService.getAppDescriptor().getConfigValue("supplementalPaperPrintLayout") != null;
 
             $scope.isHiddenInConfig = function (fieldname) {
@@ -151,7 +153,7 @@ angular.module('bahmni.registration')
                 $('.visit-patient').find('input').keypress(function (e) {
                     if (e.which === 13) // Enter key = keycode 13
                     {
-                        return false;
+                        return formSubmitOnEnter;
                     }
                 });
             };
