@@ -40,7 +40,7 @@
                             </div>
 
                             <div class="field-value">
-                                <input type="number" id="registrationFee" min={{minRegistrationFee}} ng-model="obs['REGISTRATION FEES']">
+                                <input type="number" id="registrationFee" min={{minRegistrationFee}} ng-model="obs['REGISTRATION FEES']" focus="true">
                             </div>
                     </div>
                     <div class="form-field" ng-hide="isHiddenInConfig('Comments')">
@@ -110,7 +110,7 @@
                 </div>
                 <div class="right" ng-switch-default>
                     <button type="button" ng-click="back()">Back</button>
-                    <button type="submit" ng-disabled="obs.bmi_error" ng-click="submitBtnClicked('savePrint')">Save and Print</button>
+                    <button type="button" ng-disabled="obs.bmi_error" ng-click="submit()">Save and Print</button>
                     <button type="submit" class="confirm" ng-disabled="obs.bmi_error" ng-click="submitBtnClicked('save')" >Save</button>
                 </div>
                 <div ng-show="allowPrintingSupplementalPaper">

@@ -122,16 +122,16 @@ angular.module('bahmni.registration')
             }
 
             $scope.submit = function () {
-                if ($scope.submittedFrom === 'savePrint') {
-                    return $scope.saveAndPrint();
-                }
-                else {
+                if ($scope.submittedFrom === 'save') {
                     if ($scope.patient.isNew) {
                         return $scope.saveAndPrint();
                     }
                     else {
                         return $scope.validate().then($scope.save).then(patientService.clearPatient).then($scope.moveToNextPage);
                     }
+                }
+                else {
+                    return $scope.saveAndPrint();
                 }
 
             };
