@@ -378,9 +378,11 @@ describe('VisitController', function () {
         describe("on successful creation of returning patient visit", function () {
             beforeEach(function () {
                 scope.patient.isNew = false;
+                scope.submittedFrom = 'save';
             });
 
             it("should not print card for returning patient", function () {
+
                 scope.submit();
 
                 expect(scope.print).not.toHaveBeenCalled();
