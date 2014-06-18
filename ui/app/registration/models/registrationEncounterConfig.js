@@ -8,10 +8,12 @@ Bahmni.Registration.RegistrationEncounterConfig = (function() {
   }
 
   RegistrationEncounterConfig.prototype = {
-    getVistTypesAsArray: function() {
+    getVistTypesAsArray: function(hiddenVisitTypes) {
       var visitTypesArray = [];
       for(var name in this.visitTypes) {
-          visitTypesArray.push({name: name, uuid: this.visitTypes[name]});
+          if(hiddenVisitTypes.indexOf(name) < 0){
+            visitTypesArray.push({name: name, uuid: this.visitTypes[name]});
+          }
       }
       return visitTypesArray;
     },

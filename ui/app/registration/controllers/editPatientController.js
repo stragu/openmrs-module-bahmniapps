@@ -9,7 +9,7 @@ angular.module('bahmni.registration')
             var constants = Bahmni.Registration.Constants;
             var regEncounterTypeUuid = $scope.regEncounterConfiguration.encounterTypes[constants.encounterType.registration];
             var defaultVisitType = appService.getAppDescriptor().getConfigValue('defaultVisitType');
-
+            var hiddenVisitTypes = appService.getAppDescriptor().getConfigValue('hiddenVisitTypes')|| [];
             var identifyEditActions = function() {
                 editActionsConfig = appService.getAppDescriptor().getExtensions("org.bahmni.registration.patient.edit.action", "config");
                 var editActions = editActionsConfig.filter(function(config) {
@@ -48,7 +48,7 @@ angular.module('bahmni.registration')
                 spinner.forPromise($q.all([getPatientPromise, searchActiveVisitsPromise, isDigitized]));
             })();
 
-            $scope.visitControl = new Bahmni.Common.VisitControl($rootScope.regEncounterConfiguration.getVistTypesAsArray(), defaultVisitType, visitService);
+            $scope.visitControl = new Bahmni.Common.VisitControl($rootScope.regEncounterConfiguration.getVistTypesAsArray(hiddenVisitTypes), defaultVisitType, visitService);
             $scope.visitControl.onStartVisit = function() {
                 $scope.setSubmitSource('startVisit');
             };
