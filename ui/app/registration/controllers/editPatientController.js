@@ -36,6 +36,10 @@ angular.module('bahmni.registration')
                     defaultActions.push(actionName);
                     identifyEditActions();
                 });
+                var recentMostVisitPromise = visitService.getRecentMostVisit(uuid).success(function(data){
+                    $scope.recentMostVisitDate = data.results[0].startDatetime;
+                    console.log($scope.recentMostVisitDate);
+                });
 
                 var isDigitized = encounterService.getDigitized(uuid);
                 isDigitized.success(function(data) {
@@ -45,7 +49,7 @@ angular.module('bahmni.registration')
                     $scope.isDigitized = encountersWithObservations.length > 0;
                 });
 
-                spinner.forPromise($q.all([getPatientPromise, searchActiveVisitsPromise, isDigitized]));
+                spinner.forPromise($q.all([getPatientPromise, searchActiveVisitsPromise, isDigitized, recentMostVisitPromise]));
             })();
 
             $scope.visitControl = new Bahmni.Common.VisitControl($rootScope.regEncounterConfiguration.getVistTypesAsArray(hiddenVisitTypes), defaultVisitType, visitService);

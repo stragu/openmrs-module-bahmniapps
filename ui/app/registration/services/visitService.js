@@ -16,8 +16,16 @@ angular.module('bahmni.registration')
         });
     };
 
+    var getRecentMostVisit = function(patientUuid) {
+        return $http.get(Bahmni.Registration.Constants.webServiceRestBaseURL + '/visit', {
+            params: {includeInactive:true, patient:patientUuid, v:"custom:(uuid,startDatetime)",limit:1},
+            withCredentials: true
+        });
+    };
+
     return {
         create: create,
-        search: search
+        search: search,
+        getRecentMostVisit: getRecentMostVisit
     };
 }]);

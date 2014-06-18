@@ -23,6 +23,14 @@
                 <div class="field-value">
                     <span class="uneditable-input text-only">{{patient.registrationDate | date:'dd-MM-yyyy'}}</span>
                </div>
+
+               <div class="field-attribute">
+                <label class="control-label">Last Visit Date</label>
+                </div>
+
+                <div class="field-value">
+                    <span class="uneditable-input text-only">{{recentMostVisitDate | date:'dd-MM-yyyy'}}</span>
+               </div>
         </article>
         <ng-include src="patientCommon()" ng-controller="PatientCommonController"></ng-include>
 
