@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('bahmni.registration')
-    .controller('VisitController', ['$scope', '$rootScope', '$location', 'patientService', 'encounterService', '$window', '$route', 'spinner', '$timeout', '$q', 'registrationCardPrinter', 'appService', 'openmrsPatientMapper','contextChangeHandler','MessagingService',
-        function ($scope, $rootScope, $location, patientService, encounterService, $window, $route, spinner, $timeout, $q, registrationCardPrinter, appService, patientMapper,contextChangeHandler, messagingService) {
+    .controller('VisitController', ['$scope', '$rootScope', '$location', 'patientService', 'encounterService', '$window', '$route', 'spinner', '$timeout', '$q', 'registrationCardPrinter', 'appService', 'openmrsPatientMapper','contextChangeHandler','MessagingService','$sce',
+        function ($scope, $rootScope, $location, patientService, encounterService, $window, $route, spinner, $timeout, $q, registrationCardPrinter, appService, patientMapper,contextChangeHandler, messagingService, $sce) {
             var bmiCalculator = new Bahmni.Common.BMI();
             var patientUuid = $route.current.params['patientUuid'];
             var isNewPatient = ($location.search()).newpatient;
@@ -43,7 +43,12 @@ angular.module('bahmni.registration')
             $scope.minRegistrationFee = appService.getAppDescriptor().getConfigValue("minRegistrationFee") || 0;
             var formSubmitOnEnter = appService.getAppDescriptor().getConfigValue("visitFormSubmitOnEnter") || false;
             $scope.allowPrintingSupplementalPaper = appService.getAppDescriptor().getConfigValue("supplementalPaperPrintLayout") != null;
-
+            var supplementalPaperPrintButton = appService.getAppDescriptor().getConfigValue('supplementalPaperPrintButton') || null;
+            $scope.supplementalButtonLabel = "Print Supplemental Paper";
+            if(supplementalPaperPrintButton){
+                $scope.supplementalButtonLabel = supplementalPaperPrintButton['label'];
+                $scope.supplementalButtonShortcut = supplementalPaperPrintButton['shortcutKey'];
+            }
             $scope.isHiddenInConfig = function (fieldname) {
                 if (!$scope.hideFields) return false;
 
@@ -156,6 +161,10 @@ angular.module('bahmni.registration')
                         return formSubmitOnEnter;
                     }
                 });
+            };
+
+            $scope.htmlLabel = function(label){
+                return $sce.trustAsHtml(label);
             };
 
             var getConceptSet = function(){
