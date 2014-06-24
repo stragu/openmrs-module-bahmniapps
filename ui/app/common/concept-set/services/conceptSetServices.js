@@ -10,8 +10,14 @@ angular.module('bahmni.common.conceptSet')
             		cache: cache
             	});
         };
+        var getConceptByUUID = function(uuid){
+            var conceptByUUID = Bahmni.Common.Constants.conceptUrl + '/' + uuid;
+            console.log(conceptByUUID);
+            return $http.get(conceptByUUID);
+        };
         return {
-            getConceptSetMembers: getConceptSetMembers
+            getConceptSetMembers: getConceptSetMembers,
+            getConceptByUUID: getConceptByUUID
         };
 
     }]);

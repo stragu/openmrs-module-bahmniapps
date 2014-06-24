@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('bahmni.registration')
-    .factory('patient', ['age', function (age) {
+    .factory('patient', ['$q', 'conceptSetService', 'age', function ($q, conceptSetService, age) {
         var create = function () {
             var calculateAge = function () {
                 if (this.birthdate) {
@@ -32,6 +32,26 @@ angular.module('bahmni.registration')
                 return (givenNameLocal.trim() + " " + (middleNameLocal ? middleNameLocal + " " : "" ) + familyNameLocal.trim()).trim();
             };
 
+            var patientAttribute = function(attribute){
+                if(this[attribute]){
+                    var conceptPromise = conceptSetService.getConceptByUUID(this[attribute]);
+                    conceptPromise.success(function (concept){
+                       console.log(concept);
+                    });
+                    return  "";
+                }
+                return  "";
+            };
+
+            var patientAge = function (){
+                if(this.age.years <=5 ){
+                    return this.age.years.toString() + ' years ' + this.age.months + ' months' ;
+                }
+                else{
+                    return this.age.years.toString() + ' years';
+                }
+            };
+
             var getImageData = function () {
                 return this.image && this.image.indexOf('data') === 0 ? this.image.replace("data:image/jpeg;base64,", "") : null;
             };
@@ -45,6 +65,8 @@ angular.module('bahmni.registration')
                 clearRegistrationNumber: clearRegistrationNumber,
                 image: '../images/blank-user.gif',
                 fullNameLocal: fullNameLocal,
+                patientAge: patientAge,
+                patientAttribute: patientAttribute,
                 getImageData: getImageData
             };
         };

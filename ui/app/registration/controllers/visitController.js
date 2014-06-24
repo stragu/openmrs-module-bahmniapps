@@ -31,7 +31,7 @@ angular.module('bahmni.registration')
                 $scope.obs = {};
                 $scope.registrationObservations = new Bahmni.Registration.RegistrationObservations($scope.observations, isNewPatient, $scope.regEncounterConfiguration);
                 $scope.registrationObservations.observations.forEach(function (observation) {
-                    $scope.obs[observation.concept.name] = observation.value
+                    $scope.obs[observation.concept.name] = observation.value;
                     observation.groupMembers = [];
                 });
 
@@ -54,7 +54,7 @@ angular.module('bahmni.registration')
 
                 var toUpper = function (s){
                     return s.toUpperCase();
-                }
+                };
                 return $scope.hideFields.map(toUpper).indexOf(fieldname.toUpperCase()) > -1;
             };
 
