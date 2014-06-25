@@ -11,7 +11,7 @@ angular.module('bahmni.registration')
         var printSupplementalPaper = function(patient) {
             var templatePath = appService.getAppDescriptor().getConfigValue("supplementalPaperPrintLayout") || "views/nolayoutfound.html";
             printer.print(templatePath, {patient: patient, today: new Date()});
-        }
+        };
         return {
             print: print,
             printSupplementalPaper: printSupplementalPaper

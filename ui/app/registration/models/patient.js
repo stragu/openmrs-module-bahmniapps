@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('bahmni.registration')
-    .factory('patient', ['$q', 'conceptSetService', 'age', function ($q, conceptSetService, age) {
+    .factory('patient', ['$q', '$rootScope', 'age', function ($q, $rootScope, age) {
         var create = function () {
             var calculateAge = function () {
                 if (this.birthdate) {
@@ -33,14 +33,19 @@ angular.module('bahmni.registration')
             };
 
             var patientAttribute = function(attribute){
-                if(this[attribute]){
-                    var conceptPromise = conceptSetService.getConceptByUUID(this[attribute]);
-                    conceptPromise.success(function (concept){
-                       console.log(concept);
-                    });
-                    return  "";
-                }
-                return  "";
+                var personAttributeTypes = $rootScope.patientConfiguration.personAttributeTypes;
+                var that=this;
+                var personAttribute = personAttributeTypes.filter(function(personAttribute){
+                    if(personAttribute.name == attribute){
+                        return true;
+                    }
+                })[0];
+                var answerConcept = personAttribute['answers'].filter(function(answer){
+                    if(that[attribute] && answer.conceptId == that[attribute]){
+                        return true;
+                    }
+                })[0];
+                return  answerConcept? answerConcept.description.split('-')[1].trim() : "";
             };
 
             var patientAge = function (){

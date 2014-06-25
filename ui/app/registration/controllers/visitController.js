@@ -89,7 +89,7 @@ angular.module('bahmni.registration')
 
             $scope.printSupplemental = function() {
                 return registrationCardPrinter.printSupplementalPaper($scope.patient);
-            }
+            };
 
             $scope.save = function () {
                 $scope.encounter = {encounterTypeUuid: encounterTypeUuid, patientUuid: $scope.patient.uuid};
@@ -101,7 +101,7 @@ angular.module('bahmni.registration')
                 var createPromise = encounterService.create($scope.encounter);
                 spinner.forPromise(createPromise);
                 return createPromise;
-            }
+            };
 
             $scope.moveToNextPage = function () {
                 return $timeout(function () {
@@ -124,7 +124,7 @@ angular.module('bahmni.registration')
                     return deferred.promise;
                 }
 
-            }
+            };
 
             $scope.submit = function () {
                 if ($scope.submittedFrom === 'save') {
