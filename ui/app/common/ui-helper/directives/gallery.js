@@ -41,7 +41,7 @@ angular.module('bahmni.common.uiHelper')
                   '</div>' +
                   '<div class="image-desc" ng-if="isActive($index) && photo.desc"><strong>Comments:</strong> {{photo.desc}}</div>' +
                 '</div>',
-            controller: ['$scope', '$http', function($scope, $http) {
+            controller: ['$scope', function($scope) {
 
                 $scope._Index = $scope.imageIndex || 0;
 

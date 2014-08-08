@@ -177,23 +177,4 @@ angular.module('bahmni.common.util')
                 });
             }, 0);
         }
-    })
-    .directive("popUp", function (imageObservationGalleryControl) {
-        var link = function (scope, elem) {
-            var items = [];
-            $(elem).click(function(){
-                scope.onClickHandler()().then(function (response) {
-                    scope.records = new Bahmni.Clinical.PatientFileObservationsMapper().map(response.data.results);
-                    scope.title = "Patient Documents"
-                    imageObservationGalleryControl.open(scope);
-                });
-            });
-        };
-        return {
-            link: link,
-            scope: {
-                onClickHandler: "&",
-                patient: "="
-            }
-        }
     });

@@ -1,46 +1,84 @@
 angular.module('bahmni.common.uiHelper')
-    .controller('imageGalleryController', ['$scope' ,function ($scope) {
-        var photos = [];
+    .directive('bmGalleryPane', ['$rootScope', function ($rootScope) {
 
-        angular.forEach($scope.$parent.records, function(record){
-            photos.push({src: Bahmni.Common.Constants.documentsPath + '/' + record.imageObservation.value, title: record.concept.name, desc:record.imageObservation.comment, date: record.imageObservation.observationDateTime});
+        $rootScope.$on('$stateChangeStart', function () {
+            $('body #gallery-pane').hide();
+            $('body #content-supreme').show();
         });
-        $scope.imageIndex = $scope.currentObservation ? _.findIndex($scope.$parent.records, function(record){
-            return record.imageObservation.uuid === $scope.currentObservation.uuid;
-        }) : 0;
 
+        var link = function ($scope, element) {
+            $scope.galleryElement = element;
+        };
 
-        $scope.photos = photos;
-        $scope.patient = $scope.$parent.patient;
-        $scope.title = $scope.$parent.title;
-    }])
-    .factory('imageObservationGalleryControl', function(ngDialog){
-        var open = function(scope) {
-            ngDialog.open({
-                template: 'views/imageObservationGallery.html',
-                controller: 'imageGalleryController',
-                className: undefined,
-                scope: scope
+        var controller = function ($scope) {
+            var photos = [];
+            angular.forEach($scope.records, function (record) {
+                photos.push({src: Bahmni.Common.Constants.documentsPath + '/' + record.imageObservation.value, title: record.concept.name, desc: record.imageObservation.comment, date: record.imageObservation.observationDateTime});
             });
+
+            $scope.currentIndex = $scope.currentObservation ? _.findIndex($scope.records, function (record) {
+                return record.imageObservation.uuid === $scope.currentObservation.uuid;
+            }) : 0;
+
+            $scope.photos = photos;
+            $scope.close = function () {
+                $scope.galleryElement.remove();
+                $('body #content-supreme').show();
+            };
+        };
+
+        return {
+            link: link,
+            controller: controller,
+            templateUrl: 'views/imageObservationGallery.html'
         }
-        return {open: open}
-    })
-    .directive('imageObservationGallery', function(imageObservationGalleryControl) {
-        var link = function($scope, element, attrs){
-            element.click(function(e){
+    }])
+    .directive('imageObservationGallery', ['$compile', function ($compile) {
+
+        var link = function ($scope, element, attrs) {
+            var open = function (scope) {
+                $('body #content-supreme').hide();
+                scope.element = $('body').append($compile("<div bm-gallery-pane id='gallery-pane'></div>")(scope));
+            };
+
+            element.click(function (e) {
                 e.stopPropagation();
-                imageObservationGalleryControl.open($scope);
+                open($scope);
             });
         };
 
-        return{
+        return {
             link: link,
             scope: {
                 imageIndex: "=",
                 records: "=imageObservationGallery",
                 currentObservation: "=",
                 patient: "=",
-                title: "@"
+                title: "="
             }
         }
-    });
+    }])
+    .directive("popUp", ['$compile', function ($compile) {
+        var link = function (scope, elem) {
+
+            var open = function (scope) {
+                $('body #content-supreme').hide();
+                scope.element = $('body').append($compile("<div bm-gallery-pane id='gallery-pane'></div>")(scope));
+            };
+
+            $(elem).click(function () {
+                scope.onClickHandler()().then(function (response) {
+                    scope.records = new Bahmni.Clinical.PatientFileObservationsMapper().map(response.data.results);
+                    scope.title = "Patient Documents";
+                    open(scope);
+                });
+            });
+        };
+        return {
+            link: link,
+            scope: {
+                onClickHandler: "&",
+                patient: "="
+            }
+        }
+    }]);
