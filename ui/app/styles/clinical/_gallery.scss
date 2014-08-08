@@ -85,7 +85,7 @@
     left: 0;
     margin: auto;
     overflow: auto;
-    position: fixed;
+    position: absolute;
     right: 0;
     top: 0;
 }
@@ -97,12 +97,6 @@
 	-moz-transition:1s linear all;
 	-o-transition:1s linear all;
 	transition:1s linear all;
-
-	-webkit-transform: rotateX(50deg) rotateY(30deg);
-	-moz-transform: rotateX(50deg) rotateY(30deg);
-	-ms-transform: rotateX(50deg) rotateY(30deg);
-	-o-transform: rotateX(50deg) rotateY(30deg);
-	transform: rotateX(50deg) rotateY(30deg);
 
 	-webkit-transform-origin: right top 0;
 	-moz-transform-origin: right top 0;
