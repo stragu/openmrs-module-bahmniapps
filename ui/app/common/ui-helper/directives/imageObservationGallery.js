@@ -16,18 +16,11 @@ angular.module('bahmni.common.uiHelper')
     }])
     .factory('imageObservationGalleryControl', function(ngDialog){
         var open = function(scope) {
-            var previousScrollPosition = $('body').scrollTop();
             ngDialog.open({
                 template: 'views/imageObservationGallery.html',
                 controller: 'imageGalleryController',
                 className: undefined,
                 scope: scope
-            });
-           scope.$on('ngDialog.opened', function (e, $dialog) {
-               $('body').scrollTop(0);
-            });
-           scope.$on('ngDialog.closed', function (e, $dialog) {
-               $('body').scrollTop(previousScrollPosition);
             });
         }
         return {open: open}
