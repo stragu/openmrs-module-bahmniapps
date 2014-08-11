@@ -14,13 +14,13 @@
         <title>OPD</title>
     </head>
     <body ng-app="consultation">
-        <div id="content-supreme" ng-controller="ConsultationNavigationController">
+        <div id="gallery-supreme"></div>
+        <div id="content-supreme" ng-controller="ConsultationNavigationController" ng-hide="galleryIsOpen">
             <!-- <div ng-include src="'../common/ui-helper/header.html'"></div> -->
             <div ui-view="additional-header"></div>
             <div ng-include src="'../common/ui-helper/messages.html'"></div>
             <div class="opd-wrapper">
                 <p class="caution" ng-cloak ng-show="server_error"><i class="icon-exclamation-sign small"></i><span ng-bind="server_error"></span></p>
-
                 <div ui-view="content" id="view-content" class="opd-content-wrapper"></div>
             </div>
         </div>
@@ -87,7 +87,6 @@
         <script src="../common/ui-helper/directives/conceptAutocomplete.js"></script>
         <script src="../common/ui-helper/directives/imageGallery.js"></script>
         <script src="../common/ui-helper/directives/toggle.js"></script>
-        <script src="../common/ui-helper/directives/gallery.js"></script>
         <script src="../common/ui-helper/directives/imageObservationGallery.js"></script>
         <script src="../common/ui-helper/filters/days.js"></script>
         <script src="../common/ui-helper/filters/thumbnail.js"></script>
