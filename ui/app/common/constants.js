@@ -98,7 +98,10 @@ Bahmni.Common = Bahmni.Common || {};
         imageClassName: 'Image',
         locationCookieName: 'bahmni.user.location',
         patientFileConceptName: 'Patient file',
-        serverErrorMessages: serverErrorMessages
+        serverErrorMessages: serverErrorMessages,
+        currentUser:'bahmni.user',
+        retrospectivePrivilege:'app:clinical:retrospective',
+        nutritionalConceptName:'Nutritional Values'
 };
-    
+
 })();
