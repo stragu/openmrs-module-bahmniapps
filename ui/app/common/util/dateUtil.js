@@ -70,6 +70,14 @@ Bahmni.Common.Util.DateUtil = {
         return moment(datetime).format("YYYY-MM-DD");
     },
 
+    formatDateWithTime: function(datetime) {
+        return moment(datetime).format("DD MMM YYYY h:mm A");
+    },
+
+    formatDateAsDDMMMYY: function(date) {
+        return moment(date).format("DD MMM YY");
+    },
+
     getDate: function (dateTime) {
         return moment(this.parse(dateTime)).startOf('day').toDate();
     },
