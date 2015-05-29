@@ -81,16 +81,16 @@ describe('DateUtil', function () {
             expect(period.days).toBe(21);
         });
 
-        xdescribe('when fromDate is february', function () {
+        describe('when fromDate is february', function () {
             it("should calculate difference between dates when fromDate is non-leap year", function () {
                 var fromDate = new Date();
                 fromDate.setFullYear(2011);
-                fromDate.setMonth(1);
                 fromDate.setDate(26);
+                fromDate.setMonth(1);
                 var toDate = new Date();
                 toDate.setFullYear(2011);
-                toDate.setMonth(2);
                 toDate.setDate(15);
+                toDate.setMonth(2);
                 var period = dateUtil.diffInYearsMonthsDays(fromDate, toDate);
 
                 expect(period.years).toBe(0);
@@ -101,12 +101,12 @@ describe('DateUtil', function () {
             it("should calculate difference between dates when fromDate is leap year", function () {
                 var fromDate = new Date();
                 fromDate.setFullYear(2012);
-                fromDate.setMonth(1);
                 fromDate.setDate(26);
+                fromDate.setMonth(1);
                 var toDate = new Date();
                 toDate.setFullYear(2012);
-                toDate.setMonth(2);
                 toDate.setDate(15);
+                toDate.setMonth(2);
                 var period = dateUtil.diffInYearsMonthsDays(fromDate, toDate);
 
                 expect(period.years).toBe(0);
