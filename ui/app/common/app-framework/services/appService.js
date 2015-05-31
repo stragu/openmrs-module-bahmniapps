@@ -3,7 +3,8 @@
 angular.module('bahmni.common.appFramework')
     .service('appService', ['$http', '$q', 'sessionService', '$rootScope', function ($http, $q, sessionService, $rootScope) {
         var currentUser = null;
-        var baseUrl = "/openmrs/ws/rest/v1/bahmni/config/";
+        var baseUrlConfig = "/openmrs/ws/rest/v1/bahmni/config/";
+        var baseUrlFile = "/bahmni_config/openmrs/apps/";
         var appDescriptor = null;
         var self = this;
 
@@ -17,9 +18,15 @@ angular.module('bahmni.common.appFramework')
             });
         };
 
+        var loadFile = function (url) {
+            return $http.get(url, {
+                withCredentials: true
+            });
+        };
+
         var loadTemplate = function (appDescriptor) {
             var deferrable = $q.defer();
-            loadConfig(baseUrl + appDescriptor.contextPath + "/appTemplate.json").then(
+            loadConfig(baseUrlConfig + appDescriptor.contextPath + "/appTemplate.json").then(
                 function (result) {
                     if (result.data.length > 0) {
                         appDescriptor.setTemplate(result.data[0]);
@@ -39,7 +46,7 @@ angular.module('bahmni.common.appFramework')
 
         var loadDefinition = function (appDescriptor) {
             var deferrable = $q.defer();
-            loadConfig(baseUrl + appDescriptor.contextPath + "/app.json").then(
+            loadConfig(baseUrlConfig + appDescriptor.contextPath + "/app.json").then(
                 function (result) {
                     if (result.data.length > 0) {
                         appDescriptor.setDefinition(result.data[0]);
@@ -59,7 +66,7 @@ angular.module('bahmni.common.appFramework')
 
         var loadExtensions = function (appDescriptor, extensionFileName) {
             var deferrable = $q.defer();
-            loadConfig(baseUrl + appDescriptor.extensionPath + extensionFileName).then(
+            loadConfig(baseUrlConfig + appDescriptor.extensionPath + extensionFileName).then(
                 function (result) {
                     appDescriptor.setExtensions(result.data);
                     deferrable.resolve(appDescriptor);
@@ -77,7 +84,7 @@ angular.module('bahmni.common.appFramework')
 
         var loadPageConfig = function (pageName, appDescriptor) {
             var deferrable = $q.defer();
-            loadConfig(baseUrl + appDescriptor.contextPath + "/" + pageName + ".json").then(
+            loadConfig(baseUrlConfig + appDescriptor.contextPath + "/" + pageName + ".json").then(
                 function (result) {
                     if (result.data.length > 0) {
                         appDescriptor.addConfigForPage(pageName, result.data);
@@ -99,7 +106,11 @@ angular.module('bahmni.common.appFramework')
         };
 
         this.loadConfig = function (name) {
-            return loadConfig(baseUrl + appDescriptor.contextPath + "/" + name);
+            return loadConfig(baseUrlConfig + appDescriptor.contextPath + "/" + name);
+        };
+
+        this.loadFile = function (name) {
+            return loadFile(baseUrlFile + appDescriptor.contextPath + "/" + name);
         };
 
         this.loadMandatoryConfig = function (path) {

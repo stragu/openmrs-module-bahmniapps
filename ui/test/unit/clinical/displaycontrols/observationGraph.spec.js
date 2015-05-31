@@ -9,7 +9,7 @@ describe("Observation Graph", function () {
         observationsService = jasmine.createSpyObj('observationsService', ['fetch']);
         patientService = jasmine.createSpyObj('patientService', ['getPatient']);
         conceptSetService = jasmine.createSpyObj('conceptSetService', ['getConceptSetMembers']);
-        appService = jasmine.createSpyObj('appService', ['loadConfig']);
+        appService = jasmine.createSpyObj('appService', ['loadFile']);
         $provide.value('observationsService', observationsService);
         $provide.value('patientService', patientService);
         $provide.value('conceptSetService', conceptSetService);
@@ -183,7 +183,7 @@ describe("Observation Graph", function () {
             concept: {name: "Weight", units: "Kg"}
         }]);
         mockConceptSetService([]);
-        appService.loadConfig.and.callFake(function () {
+        appService.loadFile.and.callFake(function () {
             return {
                 then: function (callback) {
                     callback({
@@ -191,7 +191,7 @@ describe("Observation Graph", function () {
                     });
                 }
             }
-        })
+        });
         var mockGrowthChartReferenceModel = jasmine.createSpyObj('GrowthChartReference',['']);
         spyOn(Bahmni.Clinical.ObservationGraph, 'create').and.returnValue(mockGrowthChartReferenceModel);
         mockPatientService({person: {birthdate: "2000-02-02"}});

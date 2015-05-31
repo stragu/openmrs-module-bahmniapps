@@ -16,7 +16,7 @@ describe("observationGraphConfig", function () {
                 "referenceData": "growthChartReference.csv"
             },
             "numberOfVisits": 20
-        }
+        };
         var graphConfig = new Bahmni.Clinical.ObservationGraphConfig(config);
         expect(graphConfig.yAxisConcepts).toEqual(["Weight"]);
         expect(graphConfig.xAxisConcept).toEqual("Age");

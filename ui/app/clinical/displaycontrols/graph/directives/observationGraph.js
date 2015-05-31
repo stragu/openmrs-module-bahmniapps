@@ -38,7 +38,7 @@ angular.module('bahmni.clinical').directive('observationGraph', ['appService', '
             }
 
             if(config.isGrowthChart()) {
-                promises.push(appService.loadConfig(config.getGrowthChartReferenceFileName()));
+                promises.push(appService.loadFile(config.getGrowthChartReferenceFileName()));
             }
 
             $q.all(promises).then(function(results) {
