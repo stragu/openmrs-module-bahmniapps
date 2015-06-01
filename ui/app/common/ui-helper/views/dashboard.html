@@ -36,7 +36,7 @@
         <ul>
             <li ng-repeat="extn in appExtensions">
 
-                <a ng-href="{{extn.url}}" class="button app big" target="{{extn.target?extn.target:'_self'}}"><i class="fa {{extn.icon}}"></i>{{extn.label}}</a>
+                <a ng-href="{{extn.url}}" class="button app big" target="{{extn.target?extn.target:'_self'}}"><i class="{{extn.icon}}"></i>{{extn.label}}</a>
 
             </li>
         </ul>
