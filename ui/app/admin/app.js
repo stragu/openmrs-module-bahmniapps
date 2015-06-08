@@ -40,6 +40,15 @@ angular.module('admin', ['httpErrorInterceptor', 'bahmni.admin', 'bahmni.common.
                     appConfigService.getAllAppNames().then(function (appNames) {
                         $scope.appExtensions = appNames.data.map(appConfigService.makeExtension);
                     })
+                },
+                data: {
+                    backLinks: [{
+                        label: "",
+                        state: "admin.dashboard",
+                        accessKey: "p",
+                        id: "back-link",
+                        icon: "fa-arrow-left"
+                    }]
                 }
             })
             .state('admin.appConfigs', {
@@ -54,6 +63,15 @@ angular.module('admin', ['httpErrorInterceptor', 'bahmni.admin', 'bahmni.common.
                     appNameInit: function ($stateParams) {
                         return $stateParams.appName;
                     }
+                },
+                data: {
+                    backLinks: [{
+                        label: "",
+                        state: "admin.configEditor",
+                        accessKey: "p",
+                        id: "back-link",
+                        icon: "fa-arrow-left"
+                    }]
                 }
             })
             .state('admin.appConfig', {
@@ -67,6 +85,15 @@ angular.module('admin', ['httpErrorInterceptor', 'bahmni.admin', 'bahmni.common.
                     configNameInit: function ($stateParams) {
                         return $stateParams.configName;
                     }
+                },
+                data: {
+                    backLinks: [{
+                        label: "",
+                        state: "admin.configEditor",
+                        accessKey: "p",
+                        id: "back-link",
+                        icon: "fa-arrow-left"
+                    }]
                 }
             });
         $httpProvider.defaults.headers.common['Disable-WWW-Authenticate'] = true;

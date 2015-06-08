@@ -33,7 +33,8 @@
     "angular-file-upload": "*",
     "stacktrace-js": "*",
     "ng-clip": "0.2.5",
-    "angular-recursion": "~1.0.5"
+    "angular-recursion": "~1.0.5",
+    "json-edit": "*"
   },
   "devDependencies": {
     "angular-mocks": "1.3.8",

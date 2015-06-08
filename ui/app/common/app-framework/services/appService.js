@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('bahmni.common.appFramework')
-    .service('appService', ['$http', '$q', 'sessionService', '$rootScope', function ($http, $q, sessionService, $rootScope) {
+    .service('appService', ['$http', '$q', 'sessionService', '$rootScope',
+        function ($http, $q, sessionService, $rootScope) {
         var currentUser = null;
         var baseUrlConfig = "/openmrs/ws/rest/v1/bahmni/config/";
         var baseUrlFile = "/bahmni_config/openmrs/apps/";
@@ -12,7 +13,7 @@ angular.module('bahmni.common.appFramework')
             return $http.get(url, {
                 withCredentials: true,
                 transformResponse: function (value) {
-                    value = value.slice(1, (value.length - 1));
+                    value = clean(value);
                     return JSON.parse(value);
                 }
             });
@@ -115,6 +116,20 @@ angular.module('bahmni.common.appFramework')
 
         this.loadMandatoryConfig = function (path) {
             return $http.get(path);
+        };
+
+        var clean = function(config){
+            if (config[0] == '"' && config[config.length - 1] == '"') {
+                config = config.slice(1, config.length - 1)
+            }
+            config = config.replace(/\\n/g, "\n");
+            config = config.replace(/\\"/g, "\"");
+            config = config.replace(/\\t/g, " ");
+            return config;
+        };
+
+        this.clean = function (config) {
+            return clean(config);
         };
 
         this.initApp = function (appName, options, extensionFileSuffix, configPages) {

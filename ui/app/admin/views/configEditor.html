@@ -1,2 +1,7 @@
-<button type="button" ng-click="save()">Save</button>
-<textarea ng-model="config"></textarea>
+<button type="button" class="confirm" ng-click="save()">Save</button>
+<!--<textarea ng-model="config"></textarea>-->
+<link  href="../components/json-edit/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+<div class="jsonView">
+    <json child="config" default-collapsed="false" type="object"></json>
+</div>
