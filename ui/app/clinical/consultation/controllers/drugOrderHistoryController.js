@@ -2,10 +2,10 @@
 
 angular.module('bahmni.clinical')
     .controller('DrugOrderHistoryController', ['$scope', '$filter', '$stateParams', 'prescribedDrugOrders',
-        'treatmentConfig', 'TreatmentService', 'spinner', 'clinicalAppConfigService',
-        function ($scope, $filter, $stateParams, prescribedDrugOrders, treatmentConfig, treatmentService, spinner, 
-                  clinicalAppConfigService) {
-            
+        'treatmentConfig', 'TreatmentService', 'spinner', 'clinicalAppConfigService','drugOrderHistoryHelper',
+        function ($scope, $filter, $stateParams, prescribedDrugOrders, treatmentConfig, treatmentService, spinner,
+                  clinicalAppConfigService, drugOrderHistoryHelper) {
+
             var DrugOrderViewModel = Bahmni.Clinical.DrugOrderViewModel;
             var DateUtil = Bahmni.Common.Util.DateUtil;
             var currentVisit = $scope.visit;
@@ -20,24 +20,8 @@ angular.module('bahmni.clinical')
                 createRecentDrugOrderGroup(activeAndScheduledDrugOrders);
             };
 
-            var getRefillableDrugOrders = function(activeAndScheduledDrugOrders) {
-                activeAndScheduledDrugOrders = _(activeAndScheduledDrugOrders).chain().sortBy('orderNumber').reverse().sortBy('effectiveStartDate').reverse().value();
-                var refillableDrugOrders = activeAndScheduledDrugOrders;
-
-                var previousVisitDrugOrders = _(getPreviousVisitDrugOrders()).chain().sortBy('orderNumber').reverse().sortBy('effectiveStartDate').reverse().value();
-                _.each(previousVisitDrugOrders, function(previousVisitDrugOrder){
-                    var isActiveOrScheduled = _.find(activeAndScheduledDrugOrders, function(activeOrScheduledDrugOrder){
-                        return previousVisitDrugOrder.drug.uuid === activeOrScheduledDrugOrder.drug.uuid;
-                    });
-                    if(!isActiveOrScheduled){
-                        refillableDrugOrders.push(previousVisitDrugOrder);
-                    }
-                });
-                return refillableDrugOrders;
-            };
-
-            var getPreviousVisitDrugOrders = function(){
-                var currentVisitIndex = _.findIndex($scope.consultation.drugOrderGroups, function(group){
+            var getPreviousVisitDrugOrders = function () {
+                var currentVisitIndex = _.findIndex($scope.consultation.drugOrderGroups, function (group) {
                     return group.isCurrentVisit;
                 });
 
@@ -51,7 +35,8 @@ angular.module('bahmni.clinical')
                 var refillableGroup = {
                     label: 'Recent',
                     selected: true,
-                    drugOrders: getRefillableDrugOrders(activeAndScheduledDrugOrders)
+                    drugOrders: drugOrderHistoryHelper.getRefillableDrugOrders(activeAndScheduledDrugOrders,
+                        getPreviousVisitDrugOrders())
                 };
                 $scope.consultation.drugOrderGroups.unshift(refillableGroup);
             };

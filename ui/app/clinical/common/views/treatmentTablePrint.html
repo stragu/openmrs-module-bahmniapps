@@ -4,7 +4,7 @@
         <th>Dosage Instructions</th>
         <th>Start Date</th>
     </tr>
-    <tbody ng-repeat="drugOrder in drugOrders| orderBy:'dateActivated':true" ng-class="{'strike-through': drugOrder.isDiscontinuedOrStopped()}">
+    <tbody ng-repeat="drugOrder in drugOrders" ng-class="{'strike-through': drugOrder.isDiscontinuedOrStopped()}">
     <tr>
         <td class="drug-name" bo-text="drugOrder.getDisplayName()"></td>
         <td class="dosage-form">
