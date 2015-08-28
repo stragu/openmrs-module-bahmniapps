@@ -53,10 +53,10 @@ angular.module('bahmni.common.domain')
             return consultationNoteConfig;
         };
 
-        configurationFunctions.radiologyObservationConfig = function(){
-            var radiologyObservationConfig =  $http.get(Bahmni.Common.Constants.conceptUrl, {
-                method:"GET",
-                params: { v: 'custom:(uuid,name)', name: Bahmni.Common.Constants.radiologyResultConceptName },
+        configurationFunctions.radiologyObservationConfig = function () {
+            var radiologyObservationConfig = $http.get(Bahmni.Common.Constants.conceptUrl, {
+                method: "GET",
+                params: {v: 'custom:(uuid,name)', name: Bahmni.Common.Constants.radiologyResultConceptName},
                 withCredentials: true
             });
             return radiologyObservationConfig;
@@ -105,7 +105,7 @@ angular.module('bahmni.common.domain')
             });
         };
 
-        configurationFunctions.genderMap = function() {
+        configurationFunctions.genderMap = function () {
             return $http.get(Bahmni.Common.Constants.globalPropertyUrl, {
                 method: "GET",
                 params: {
@@ -115,7 +115,7 @@ angular.module('bahmni.common.domain')
             });
         };
 
-        configurationFunctions.relationshipTypeMap = function() {
+        configurationFunctions.relationshipTypeMap = function () {
             return $http.get(Bahmni.Common.Constants.globalPropertyUrl, {
                 method: "GET",
                 params: {
@@ -125,7 +125,7 @@ angular.module('bahmni.common.domain')
             });
         };
 
-        configurationFunctions.relationshipTypeConfig = function() {
+        configurationFunctions.relationshipTypeConfig = function () {
             return $http.get(Bahmni.Common.Constants.relationshipTypesUrl, {
                 withCredentials: true,
                 params: {v: "custom:(aIsToB,bIsToA,uuid)"}

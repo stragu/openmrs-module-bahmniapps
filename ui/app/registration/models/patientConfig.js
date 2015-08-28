@@ -59,7 +59,7 @@ Bahmni.Registration.PatientConfig = (function () {
         },
 
         heathCentreAttribute: function () {
-            return this.personAttributeTypes.filter(function (item) {
+           return this.personAttributeTypes.filter(function (item) {
                 return item.name === "healthCenter";
             })[0];
         },

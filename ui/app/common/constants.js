@@ -46,7 +46,7 @@ Bahmni.Common = Bahmni.Common || {};
         visitSummaryUrl: BAHMNI_CORE + "/visit/summary",
         encounterModifierUrl: BAHMNI_CORE + "/bahmniencountermodifier",
         openmrsUrl: "/openmrs",
-        idgenConfigurationURL: RESTWS_V1 + "/idgen/identifiersources",
+        idgenConfigurationURL: RESTWS_V1 + "/identifierSource?v=default",
         bahmniRESTBaseURL: BAHMNI_CORE + "",
         observationsUrl: BAHMNI_CORE + "/observations",
         obsRelationshipUrl: BAHMNI_CORE + "/obsrelationships",

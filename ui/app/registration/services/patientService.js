@@ -40,32 +40,31 @@ angular.module('bahmni.registration')
             return $http.get(url, config);
         };
 
-        var generateIdentifier = function (patient) {
-            var data = {"identifierSourceName": patient.identifierPrefix.prefix};
-            var url = openmrsUrl + "/ws/rest/v1/idgen";
+        var generateIdentifier = function (selectedIdentifierSourceUUID) {
+            var data = {"comment": "New Bahmni Patient"};
+            var url = openmrsUrl + "/ws/rest/v1/identifierSource/" + selectedIdentifierSourceUUID + "/identifier";
             var config = {
                 withCredentials: true,
-                headers: {"Accept": "text/plain", "Content-Type": "application/json"}
+                headers: {"Accept": "application/json", "Content-Type": "application/json"}
             };
             return $http.post(url, data, config);
         };
 
-        var getLatestIdentifier = function (sourceName) {
-            var url = openmrsUrl + "/ws/rest/v1/idgen" + "/latestidentifier";
+        var getLatestIdentifier = function (selectedIdentifierSourceUUID) {
+            var url = openmrsUrl + "/ws/rest/v1/identifierSource/" + selectedIdentifierSourceUUID;
             var config = {
                 method: "GET",
                 withCredentials: true,
-                params: {"sourceName": sourceName},
-                headers: {"Accept": "text/plain", "Content-Type": "application/json"}
+                headers: {"Accept": "application/json", "Content-Type": "application/json"}
             };
             return $http.get(url, config);
         };
 
-        var setLatestIdentifier = function (sourceName, identifier) {
-            var url = openmrsUrl + "/ws/rest/v1/idgen" + "/latestidentifier";
+        var setLatestIdentifier = function (selectedIdentifierSourceUUID, identifier) {
+            var url = openmrsUrl + "/ws/rest/v1/identifierSource/" + selectedIdentifierSourceUUID;
             var data = {
-                sourceName: sourceName,
-                identifier: identifier
+                uuid: selectedIdentifierSourceUUID,
+                nextSequenceValue: identifier
             };
             return $http.post(url, data);
         };

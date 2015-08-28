@@ -18,7 +18,7 @@ angular.module('bahmni.registration')
 
             var generateIdentifier = function () {
                 if (this.registrationNumber && this.registrationNumber.length > 0) {
-                    this.identifier = this.identifierPrefix.name + this.registrationNumber;
+                    this.identifier = this.selectedIdentifierSource.prefix + this.registrationNumber;
                 }
                 return this.identifier
             };
@@ -44,7 +44,7 @@ angular.module('bahmni.registration')
                 ,age: age.create()
                 ,birthdate: null
                 ,calculateAge: calculateAge
-                ,identifierPrefix: {}
+                ,selectedIdentifierSource: {}
                 ,generateIdentifier: generateIdentifier
                 ,clearRegistrationNumber: clearRegistrationNumber
                 ,image: '../images/blank-user.gif'

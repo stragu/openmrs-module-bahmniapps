@@ -13,8 +13,8 @@ angular.module('bahmni.registration')
             (function () {
                 $scope.patient = patientModel.create();
                 $scope.identifierSources = $rootScope.patientConfiguration.identifierSources;
-                var identifierPrefix = _.findWhere($scope.identifierSources, {prefix: preferences.identifierPrefix});
-                $scope.patient.identifierPrefix = identifierPrefix || $scope.identifierSources[0];
+                var identifierSource = _.findWhere($scope.identifierSources, {prefix: preferences.identifierPrefix});
+                $scope.patient.selectedIdentifierSource = identifierSource || $scope.identifierSources[0];
                 $scope.hasOldIdentifier = preferences.hasOldIdentifier;
             })();
 
@@ -65,23 +65,24 @@ angular.module('bahmni.registration')
 
                 if (!$scope.hasOldIdentifier) {
                     spinner.forPromise(
-                        patientService.generateIdentifier($scope.patient).then(function (response) {
-                            $scope.patient.identifier = response.data;
+                        patientService.generateIdentifier($scope.patient.selectedIdentifierSource.uuid).then(function (response) {
+                            $scope.patient.identifier = response.data.identifier;
                             patientService.create($scope.patient).success(copyPatientProfileDataToScope);
                         })
                     );
                 }
                 else {
                     spinner.forPromise(
-                        patientService.getLatestIdentifier($scope.patient.identifierPrefix.prefix).then(function (response) {
+                        patientService.getLatestIdentifier($scope.patient.selectedIdentifierSource.uuid).then(function (response) {
 
-                            var sourceName = $scope.patient.identifierPrefix.prefix;
-                            var latestIdentifier = response.data;
+                            var identifierSourceUUID = $scope.patient.selectedIdentifierSource.uuid;
+                            var latestIdentifier = response.data.nextSequenceValue;
                             var givenIdentifier = parseInt($scope.patient.registrationNumber);
                             var nextIdentifierToBe = parseInt($scope.patient.registrationNumber) + 1;
+                            $scope.patient.selectedIdentifierSource.nextSequenceValue = nextIdentifierToBe;
                             var sizeOfTheJump = givenIdentifier - latestIdentifier;
                             if (sizeOfTheJump === 0) {
-                                createPatientAndSetIdentifier(sourceName, nextIdentifierToBe);
+                                createPatientAndSetIdentifier(identifierSourceUUID, nextIdentifierToBe);
                             }
                             else if (sizeOfTheJump > 0) {
                                 getConfirmationViaNgDialog({
@@ -89,7 +90,7 @@ angular.module('bahmni.registration')
                                     data: {sizeOfTheJump: sizeOfTheJump},
                                     scope: $scope,
                                     yesCallback: function () {
-                                        createPatientAndSetIdentifier(sourceName, nextIdentifierToBe);
+                                        createPatientAndSetIdentifier(identifierSourceUUID, nextIdentifierToBe);
                                     }
                                 });
                             }
@@ -102,7 +103,7 @@ angular.module('bahmni.registration')
             };
 
             var setPreferences = function () {
-                preferences.identifierPrefix = $scope.patient.identifierPrefix.prefix;
+                preferences.identifierPrefix = $scope.patient.selectedIdentifierSource.prefix;
             };
 
             var copyPatientProfileDataToScope = function (patientProfileData) {

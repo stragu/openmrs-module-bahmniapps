@@ -49,7 +49,7 @@ angular.module('bahmni.common.config')
         };
 
         this.identifierSourceConfig = function() {
-            return this.configs.identifierSourceConfig;
+            return this.configs.identifierSourceConfig.results;
         };
 
         this.genderMap = function() {
