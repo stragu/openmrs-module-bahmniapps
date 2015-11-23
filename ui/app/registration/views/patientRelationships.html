@@ -9,7 +9,7 @@
                     <span ng-if="isPatientRelationship(relationship)"><a ng-click="openPatientDashboardInNewTab(relationship)"><i class="fa fa-external-link"></i></a></span>
                 </div>
                 <div class="col col3">
-                    <strong class="till-text">{{ 'REGISTRATION_LABEL_TILL' | translate}}</strong>
+                    <strong class="till-text" translate-once="REGISTRATION_LABEL_TILL"></strong>
                     <span>{{relationship.endDate | bahmniDate}}</span>
                 </div>
                 <div class="col col4">
@@ -30,7 +30,7 @@
                     </div>
                     <div class="field-value">
                         <select ng-model="newRelationship.relationshipType.uuid" ng-options="type.uuid as type.aIsToB for type in relationshipTypes" ng-change="clearRelationshipRow(newRelationship, $index);">
-                            <option value="">{{ 'REGISTRATION_LABEL_SELECT_RELATIONSHIP_TYPE' | translate}}</option>
+                            <option value="" translate-once="REGISTRATION_LABEL_SELECT_RELATIONSHIP_TYPE"></option>
                         </select>
                     </div>
                     <span class="asterick showOn-desktop">*</span>
@@ -53,11 +53,11 @@
                         <input type="hidden" ng-model="newRelationship.personB.uuid"/>
                     </div>
                     <span class="asterick showOn-desktop">*</span>
-                    <span class="no-person" ng-show="showPersonNotFound(newRelationship)">{{ 'REGISTRATION_LABEL_PERSON_NOT_FOUND' | translate}}</span>
+                    <span class="no-person" ng-show="showPersonNotFound(newRelationship)" translate-once="REGISTRATION_LABEL_PERSON_NOT_FOUND"></span>
                     <span ng-show="!showPersonNotFound(newRelationship)">{{newRelationship.content}}</span>
                 </div>
                 <div class="col col3 form-field">
-                    <strong class="till-text">{{ 'REGISTRATION_LABEL_TILL' | translate}}</strong>
+                    <strong class="till-text" translate-once="REGISTRATION_LABEL_TILL"></strong>
                     <div class="field-attribute showOn-small-screen">
                         <label>Till Date</label>
                     </div>

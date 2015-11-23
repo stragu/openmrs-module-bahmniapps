@@ -3,7 +3,7 @@
         <div>
             <form name="myForm" ng-init="disableFormSubmitOnEnter()" class="visit-patient" ng-submit="submit()">
                 <div class="box-container">
-                    <div class="mylegend"><span><strong>{{ 'REGISTRATION_LABEL_SUMMARY' | translate}}</strong></span></div>
+                    <div class="mylegend"><span><strong translate-once="REGISTRATION_LABEL_SUMMARY"></strong></span></div>
                     <div class="photo-container-wrapper">
                         <span class="pull-right photo-container">
                                 <img id="patient-image" ng-src="{{patient.image}}"
@@ -14,7 +14,7 @@
                     <section>
                         <div class="form-field">
                             <div class="field-attribute">
-                                <label for="patientId">{{ 'REGISTRATION_LABEL_PATIENT_IDENTIFIER' | translate}}</label>
+                                <label for="patientId" translate-once="REGISTRATION_LABEL_PATIENT_IDENTIFIER"></label>
                             </div>
                             <div class="field-value">
                                 <input id="patientId" ng-model="patient.identifier" readonly type="text">
@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-field photocontainer-spacing">
                             <div class="field-attribute">
-                                <label class="control-label" for="patientName">{{ 'REGISTRATION_LABEL_PATIENT_NAME' | translate}}</label>
+                                <label class="control-label" for="patientName" translate-once="REGISTRATION_LABEL_PATIENT_NAME"></label>
                             </div>
                             <div class="field-value">
                                 <input id="patientName" ng-model="patient.name" readonly type="text">
@@ -51,7 +51,7 @@
                     </section>
                 </div>
                 <div class="submit-btn-container">
-                    <button type="button" class="cancel" tabindex="-1" ng-show="canCloseVisit" ng-click="closeVisitIfDischarged()">{{ 'REGISTRATION_LABEL_CLOSE_VISIT' | translate}}</button>
+                    <button type="button" class="cancel" tabindex="-1" ng-show="canCloseVisit" ng-click="closeVisitIfDischarged()" translate-once="REGISTRATION_LABEL_CLOSE_VISIT"></button>
                     <div class="right">
                         <button type="button" ng-click="back()" accesskey="{{ 'REGISTRATION_BACK_ACCESS_KEY' | translate}}" ng-bind-html="'REGISTRATION_LABEL_BACK' | translate"></button>
                         <button type="submit" class="confirm" accesskey="{{ 'REGISTRATION_SAVE_ACCESS_KEY' | translate}}" ng-bind-html="'REGISTRATION_LABEL_SAVE' | translate"></button>
