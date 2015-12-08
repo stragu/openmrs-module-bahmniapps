@@ -9,6 +9,13 @@ angular.module('bahmni.admin')
                 connectWith: ".form-container",
                 update: function (e, ui) {
                      $scope.formElementTypes = formElementTypes.slice();
+                },
+                stop: function(e, ui){
+                    var targetModelList = ui.item.sortable.droptargetModel;
+                    for (var index in targetModelList) {
+                        targetModelList[index].sortWeight = index;
+                    }
+
                 }
             };
             $scope.form = {

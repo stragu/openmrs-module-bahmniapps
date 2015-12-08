@@ -5,25 +5,16 @@ angular.module('bahmni.admin')
         var controller = function ($scope) {
             $scope.sortableOptions = {
                 connectWith: ".form-container",
-                //stop: function (e, ui) {
-                //    console.log("stop");
-                //    var sortable = ui.item.sortable;
-                //    sortable.model.sortWeight = sortable.dropindex;
-                //    console.log($scope.form);
-                //    for (var index in $scope.form.formElements) {
-                //        $scope.form.formElements[index].sortWeight = index;
-                //    }
-                //},
-                //update: function (e, ui) {
-                //    console.log("update");
-                //    console.log($scope.form);
-                //    var sortable = ui.item.sortable;
-                //    sortable.model.sortWeight = sortable.dropindex;
-                //    for (var index in $scope.form.formElements) {
-                //        $scope.form.formElements[index].sortWeight = index;
-                //    }
-                //}
-
+                stop: function (e, ui) {
+                    var targetModelList = ui.item.sortable.droptargetModel;
+                    var sourceModelList = ui.item.sortable.sourceModel;
+                    for (var index in sourceModelList) {
+                        sourceModelList[index].sortWeight = index;
+                    }
+                    for (var index in targetModelList) {
+                        targetModelList[index].sortWeight = index;
+                    }
+                }
             };
 
         };
