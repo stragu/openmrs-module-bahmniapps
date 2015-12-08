@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('admin', ['httpErrorInterceptor', 'bahmni.admin', 'bahmni.common.routeErrorHandler', 'ngSanitize', 'bahmni.common.uiHelper', 'bahmni.common.config',  'bahmni.common.i18n', 'pascalprecht.translate', 'ngCookies', 'angularFileUpload'])
+angular.module('admin', ['httpErrorInterceptor', 'bahmni.admin', 'bahmni.common.routeErrorHandler', 'ngSanitize', 'bahmni.common.uiHelper', 'bahmni.common.config',  'bahmni.common.i18n', 'pascalprecht.translate', 'ngCookies', 'angularFileUpload','RecursionHelper'])
     .config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$bahmniTranslateProvider', function ($stateProvider, $httpProvider, $urlRouterProvider, $bahmniTranslateProvider) {
         $urlRouterProvider.otherwise('/dashboard');
     $stateProvider.state('admin', {
@@ -29,6 +29,11 @@ angular.module('admin', ['httpErrorInterceptor', 'bahmni.admin', 'bahmni.common.
             templateUrl: 'views/csvexport.html',
             controller: 'CSVExportController'
 
+        })
+        .state('admin.formBuilder',
+        {   url: '/formBuilder',
+            templateUrl: 'views/formBuilder.html',
+            controller: 'FormBuilderController'
         });
     $httpProvider.defaults.headers.common['Disable-WWW-Authenticate'] = true;
     // $bahmniTranslateProvider.init({app: 'admin', shouldMerge: true});

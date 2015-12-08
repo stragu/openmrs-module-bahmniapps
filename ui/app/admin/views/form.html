@@ -1,0 +1,11 @@
+<span>{{form.display}}</span>
+<div class="form-container" ui-sortable="sortableOptions" ng-model="form.formElements">
+    <div ng-repeat="element in form.formElements track by $index">
+        <div class="element-type" ng-if="!element.isSet">
+            {{element.display}}
+        </div>
+        <div ng-if="element.isSet">
+            <form-builder form="element"></form-builder>
+        </div>
+    </div>
+</div>
