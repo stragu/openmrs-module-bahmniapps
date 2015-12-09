@@ -14,7 +14,11 @@ angular.module('bahmni.admin')
                     for (var index in targetModelList) {
                         targetModelList[index].sortWeight = index;
                     }
+                },
+                update: function (e, ui) {
+                    ui.item.sortable.model = _.extend({}, ui.item.sortable.model);
                 }
+
             };
 
         };

@@ -3,14 +3,15 @@
 angular.module('bahmni.admin')
     .controller('FormBuilderController', ['$scope',
         function ($scope) {
-            var formElementTypes = [{ type:'Text'}, {type: 'Numeric'}, {type: 'Sub Form'}];
-            $scope.formElementTypes = formElementTypes.slice();
+            $scope.formElementTypes = [{type: 'Text'}, {type: 'Numeric'}, {type: 'Sub Form'}];
+
             $scope.sortableOptionsForElementType = {
                 connectWith: ".form-container",
                 update: function (e, ui) {
-                     $scope.formElementTypes = formElementTypes.slice();
+                    var modelToBeRestored = angular.copy(ui.item.sortable.model);
+                    $scope.formElementTypes.splice(ui.item.sortable.index, 0, modelToBeRestored);
                 },
-                stop: function(e, ui){
+                stop: function (e, ui) {
                     var targetModelList = ui.item.sortable.droptargetModel;
                     for (var index in targetModelList) {
                         targetModelList[index].sortWeight = index;
@@ -57,7 +58,23 @@ angular.module('bahmni.admin')
                                     "required": true
                                 }
 
+                            },
+                            {
+                                display: "Vitals",
+                                isSet: true,
+                                formElements: [{
+                                    name: "History Notes",
+                                    datatype: "text",
+                                    display: "History Notes",
+                                    uiControls: {
+                                        "conciseText": true,
+                                        "required": true
+                                    }
+
+                                }]
                             }
+
+
                         ]
                     }
                 ]
