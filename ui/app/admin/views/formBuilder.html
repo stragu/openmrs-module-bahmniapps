@@ -1,6 +1,8 @@
 <div class="wrapper">
     <div class="element-types" ui-sortable="sortableOptionsForElementType" ng-model="formElementTypes">
-        <div class="element-type" ng-repeat="item in formElementTypes">{{item.type}}</div>
+        <div class="element-type" ng-repeat="item in formElementTypes">
+            {{item.type}}
+        </div>
     </div>
     <div class="form-builder-pane">
        <form-builder form="form"></form-builder>

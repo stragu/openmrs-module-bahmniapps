@@ -3,6 +3,8 @@
     <div ng-repeat="element in form.formElements">
         <div class="element-type" ng-if="!element.isSet">
             {{element.display}} {{ element.sortWeight}}
+            <tg-dynamic-directive ng-model="element.type" tg-dynamic-directive-view="getView">
+            </tg-dynamic-directive>
         </div>
         <div ng-if="element.isSet">
             <form-builder form="element"></form-builder>

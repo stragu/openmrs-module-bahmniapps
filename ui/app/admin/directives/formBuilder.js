@@ -5,6 +5,7 @@ angular.module('bahmni.admin')
         var controller = function ($scope) {
             $scope.sortableOptions = {
                 connectWith: ".form-container",
+                //revert: true, for animation
                 stop: function (e, ui) {
                     var targetModelList = ui.item.sortable.droptargetModel;
                     var sourceModelList = ui.item.sortable.sourceModel;
@@ -14,10 +15,24 @@ angular.module('bahmni.admin')
                     for (var index in targetModelList) {
                         targetModelList[index].sortWeight = index;
                     }
-                },
-                update: function (e, ui) {
-                    ui.item.sortable.model = _.extend({}, ui.item.sortable.model);
                 }
+
+            };
+
+
+            $scope.getView = function(item) {
+                if(item){
+                    if(item === 'Text') {
+                        return '../admin/views/dummyText.html';
+                    }
+                    else if(item === 'Numeric') {
+                        return '../admin/views/dummyNumber.html';
+                    }
+                    else{
+                        return null
+                    }
+                }
+                return null;
 
             };
 
